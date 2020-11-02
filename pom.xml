@@ -18,7 +18,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<sqlite.dialect.version>0.1.0</sqlite.dialect.version>
-		<swagger.version>2.9.2</swagger.version>
+		<swagger.version>3.0.0</swagger.version>
 		<spring.cloud.version>Hoxton.SR8</spring.cloud.version>
 		<spring.admin.client.version>2.3.0</spring.admin.client.version>
 	</properties>
@@ -77,12 +77,7 @@
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${swagger.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
+			<artifactId>springfox-boot-starter</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
 		<dependency>
