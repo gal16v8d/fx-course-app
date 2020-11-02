@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @EnableEurekaClient
 @ComponentScan({ CourseApplication.BASE_PACKAGE + "config", CourseApplication.BASE_PACKAGE + "controller",
-		CourseApplication.BASE_PACKAGE + "repository" })
+		CourseApplication.BASE_PACKAGE + "converter", CourseApplication.BASE_PACKAGE + "repository" })
 public class CourseApplication {
 
 	public static final String BASE_PACKAGE = "co.com.gsdd.course.app.";

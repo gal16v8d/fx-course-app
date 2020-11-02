@@ -1,4 +1,4 @@
-package co.com.gsdd.course.app.model;
+package co.com.gsdd.course.app.persistence.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,15 +6,19 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Generated;
+import lombok.NoArgsConstructor;
 
 @Generated
 @Data
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Course {
 
 	@NotEmpty(message = "courseId should not be empty")
