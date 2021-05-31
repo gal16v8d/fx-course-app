@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.Sort;
@@ -27,7 +26,9 @@ import co.com.gsdd.course.app.converter.GenericConverter;
 import co.com.gsdd.course.app.model.CourseModel;
 import co.com.gsdd.course.app.persistence.entities.Course;
 import co.com.gsdd.course.app.repository.CourseRepository;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @RefreshScope
 @RestController
 @RequestMapping("courses")
@@ -38,12 +39,6 @@ public class CourseController {
 
 	private final CourseRepository courseRepository;
 	private final GenericConverter<Course, CourseModel> courseConverter;
-
-	@Autowired
-	public CourseController(GenericConverter<Course, CourseModel> courseConverter, CourseRepository courseRepository) {
-		this.courseConverter = courseConverter;
-		this.courseRepository = courseRepository;
-	}
 
 	@GetMapping("/welcome")
 	public String getWelcomeMsg() {
