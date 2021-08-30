@@ -1,7 +1,6 @@
 package co.com.gsdd.course.app.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -83,16 +82,11 @@ public class CourseController {
 	}
 
 	@DeleteMapping("{courseId}")
-	public ResponseEntity<CourseModel> deleteCourse(@PathVariable("courseId") String courseId) {
-		ResponseEntity<CourseModel> response;
-		Optional<Course> courseOp = courseRepository.findById(courseId);
-		if (courseOp.isPresent()) {
-			courseRepository.delete(courseOp.get());
-			response = ResponseEntity.noContent().build();
-		} else {
-			response = ResponseEntity.notFound().build();
-		}
-		return response;
+	public ResponseEntity<Object> deleteCourse(@PathVariable("courseId") String courseId) {
+		return courseRepository.findById(courseId).map(course -> {
+			courseRepository.delete(course);
+			return ResponseEntity.noContent().build();
+		}).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 }
