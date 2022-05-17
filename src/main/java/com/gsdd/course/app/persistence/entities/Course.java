@@ -20,13 +20,13 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Course {
 
-    @NotEmpty(message = "courseId should not be empty")
-    @Id
-    @Column(name = "courseId")
-    private String courseId;
+  @NotEmpty(message = "courseId should not be empty")
+  @Id
+  @Column(name = "courseId")
+  private String courseId;
 
-    @NotEmpty(message = "courseName should not be empty")
-    @Size(min = 3, message = "courseName should have at least three chars")
-    @Column(name = "courseName", unique = true, nullable = false)
-    private String courseName;
+  @NotEmpty(message = "courseName should not be empty")
+  @Size(min = 3, message = "courseName should have at least three chars")
+  @Column(name = "courseName", unique = true, nullable = false)
+  private String courseName;
 }
