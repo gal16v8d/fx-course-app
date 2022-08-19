@@ -33,9 +33,9 @@
 		<checkstyle.version>10.1</checkstyle.version>
 
 		<sqlite.dialect.version>0.1.0</sqlite.dialect.version>
-		<springdoc.openapi.ui.version>1.6.7</springdoc.openapi.ui.version>
-		<spring.cloud.version>2021.0.1</spring.cloud.version>
-		<spring.admin.client.version>2.6.5</spring.admin.client.version>
+		<springdoc.openapi.ui.version>1.6.10</springdoc.openapi.ui.version>
+		<spring.cloud.version>2021.0.3</spring.cloud.version>
+		<spring.admin.client.version>2.7.4</spring.admin.client.version>
 	</properties>
 
 	<dependencies>
