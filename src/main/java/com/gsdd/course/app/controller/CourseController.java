@@ -93,7 +93,7 @@ public class CourseController {
     return courseRepository
         .findById(courseId)
         .map(
-            course -> {
+            (Course course) -> {
               courseRepository.delete(course);
               return ResponseEntity.noContent().build();
             })
