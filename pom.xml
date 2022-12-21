@@ -32,7 +32,7 @@
 
 		<springdoc.openapi.ui.version>1.6.10</springdoc.openapi.ui.version>
 		<spring.cloud.version>2022.0.0</spring.cloud.version>
-		<spring.admin.client.version>3.0.0-M6</spring.admin.client.version>
+		<spring.admin.client.version>3.0.0-M7</spring.admin.client.version>
 	</properties>
 
 	<dependencies>
