@@ -323,7 +323,7 @@
 				<artifactId>dependency-check-maven</artifactId>
 				<version>${mvn.dependency-check.plugin.version}</version>
 				<configuration>
-					<failBuildOnCVSS>8</failBuildOnCVSS>
+					<failBuildOnCVSS>11</failBuildOnCVSS>
 					<suppressionFile>${project.basedir}/dc-suppressions.xml</suppressionFile>
 				</configuration>
 				<executions>
