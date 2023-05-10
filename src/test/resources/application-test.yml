@@ -1,0 +1,12 @@
+service:
+  welcome:
+    message: Hello from test fx-course-app
+
+logging:
+  level:
+    root: error
+    org:
+      hibernate:
+        SQL: error
+      springframework: off
+      

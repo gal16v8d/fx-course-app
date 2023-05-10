@@ -1,6 +1,8 @@
 package com.gsdd.course.app.controller.advice;
 
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,9 +13,10 @@ public class RestValidationHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(ConstraintViolationException.class)
   protected ResponseEntity<Object> handleConflict(ConstraintViolationException e) {
-    StringBuilder messages = new StringBuilder();
-    e.getConstraintViolations()
-        .forEach(cv -> messages.append(cv.getMessage()).append(System.lineSeparator()));
-    return ResponseEntity.badRequest().body(messages.toString());
+    return ResponseEntity.badRequest()
+        .body(
+            e.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.joining(System.lineSeparator())));
   }
 }

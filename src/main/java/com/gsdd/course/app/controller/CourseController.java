@@ -6,7 +6,6 @@ import com.gsdd.course.app.persistence.entities.Course;
 import com.gsdd.course.app.repository.CourseRepository;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -56,7 +55,7 @@ public class CourseController {
     List<CourseModel> courses =
         courseRepository.findAll(Sort.by("courseId")).stream()
             .map(this::defineModelWithLinks)
-            .collect(Collectors.toList());
+            .toList();
     Link link = WebMvcLinkBuilder.linkTo(CourseController.class).withSelfRel();
     CollectionModel<CourseModel> result = CollectionModel.of(courses, link);
     return ResponseEntity.ok(result);
@@ -68,7 +67,7 @@ public class CourseController {
         .findById(courseId)
         .map(this::defineModelWithLinks)
         .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.notFound().build());
+        .orElseGet(ResponseEntity.notFound()::build);
   }
 
   @PostMapping
@@ -85,7 +84,7 @@ public class CourseController {
         .map(oldCourse -> courseRepository.saveAndFlush(courseConverter.convertToEntity(course)))
         .map(this::defineModelWithLinks)
         .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.notFound().build());
+        .orElseGet(ResponseEntity.notFound()::build);
   }
 
   @DeleteMapping("{courseId}")
@@ -97,6 +96,6 @@ public class CourseController {
               courseRepository.delete(course);
               return ResponseEntity.noContent().build();
             })
-        .orElseGet(() -> ResponseEntity.notFound().build());
+        .orElseGet(ResponseEntity.notFound()::build);
   }
 }

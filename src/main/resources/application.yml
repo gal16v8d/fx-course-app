@@ -1,0 +1,38 @@
+service:
+  welcome:
+    message: Hello from local fx-course-app
+    
+server:
+  port: 8093
+
+spring:
+  application:
+    name: fx-course-app
+  boot:
+    admin:
+      client:
+        url: http://localhost:8763
+  config:
+    import: "optional:configserver:http://localhost:8088"
+  datasource:
+    url: jdbc:sqlite:course.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: none
+      naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    baggage:
+      correlation:
+        enabled: true
+    sampling:
+      probability: 1.0
+      
