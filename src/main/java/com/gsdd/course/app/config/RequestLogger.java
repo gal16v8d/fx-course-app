@@ -15,16 +15,16 @@ public class RequestLogger {
 
   @Around("execution(* " + CourseApplication.BASE_PACKAGE + "controller.CourseController.*(..))")
   public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-    Object o = null;
-    String nombreJP = joinPoint.getSignature().getName();
+    Object o;
+    String nameJp = joinPoint.getSignature().getName();
     long startTime = System.nanoTime();
-    log.info("Before: {}", nombreJP);
+    log.info("Before: {}", nameJp);
     o = joinPoint.proceed();
-    log.info("After: {}", nombreJP);
+    log.info("After: {}", nameJp);
     long timeTaken = System.nanoTime() - startTime;
     log.info(
         "request {} took {} ms",
-        nombreJP,
+        nameJp,
         TimeUnit.MILLISECONDS.convert(timeTaken, TimeUnit.NANOSECONDS));
     return o;
   }

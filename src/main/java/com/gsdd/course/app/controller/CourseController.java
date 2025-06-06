@@ -10,9 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.Sort;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+// import org.springframework.hateoas.CollectionModel;
+// import org.springframework.hateoas.Link;
+// import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,23 +42,28 @@ public class CourseController {
 
   private CourseModel defineModelWithLinks(Course entity) {
     CourseModel model = courseConverter.convertToDomain(entity);
+    /*
     Link link =
         WebMvcLinkBuilder.linkTo(
                 WebMvcLinkBuilder.methodOn(CourseController.class).getById(model.getCourseId()))
             .withSelfRel();
     model.add(link);
+    */
     return model;
   }
 
   @GetMapping
-  public ResponseEntity<CollectionModel<CourseModel>> getAll() {
+  public ResponseEntity</*CollectionModel*/List<CourseModel>> getAll() {
     List<CourseModel> courses =
         courseRepository.findAll(Sort.by("courseId")).stream()
             .map(this::defineModelWithLinks)
             .toList();
+    /*
     Link link = WebMvcLinkBuilder.linkTo(CourseController.class).withSelfRel();
     CollectionModel<CourseModel> result = CollectionModel.of(courses, link);
-    return ResponseEntity.ok(result);
+    */
+    // return ResponseEntity.ok(result);
+    return ResponseEntity.ok(courses);
   }
 
   @GetMapping("{courseId}")

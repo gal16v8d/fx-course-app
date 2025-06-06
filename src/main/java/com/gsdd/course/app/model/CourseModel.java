@@ -8,13 +8,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Generated;
-import org.springframework.hateoas.RepresentationModel;
+// import org.springframework.hateoas.RepresentationModel;
 
 @Generated
 @Data
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class CourseModel extends RepresentationModel<CourseModel> {
+public class CourseModel /*extends RepresentationModel<CourseModel>*/ {
 
   @NotEmpty(message = "courseId should not be empty")
   @Id

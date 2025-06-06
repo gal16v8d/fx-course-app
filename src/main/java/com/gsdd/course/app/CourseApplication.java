@@ -6,17 +6,9 @@ import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-//@EnableEurekaClient
-@ComponentScan({
-  CourseApplication.BASE_PACKAGE + "config",
-  CourseApplication.BASE_PACKAGE + "controller",
-  CourseApplication.BASE_PACKAGE + "converter",
-  CourseApplication.BASE_PACKAGE + "repository"
-})
 @OpenAPIDefinition(
     info =
         @Info(
