@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.context.request.WebRequest
-import java.util.Map
 import java.util.stream.Collectors
 
 @ControllerAdvice
@@ -22,6 +21,7 @@ class RestValidationHandler {
 
     @ExceptionHandler(Exception::class)
     fun defaultHandler(e: Exception, request: WebRequest?): ResponseEntity<Any?> {
-        return ResponseEntity.internalServerError().body<Any?>(Map.of<String?, String?>("detail", e.message))
+        val data = mapOf("detail" to e.message)
+        return ResponseEntity.internalServerError().body<Any?>(data)
     }
 }

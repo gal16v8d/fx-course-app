@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.Optional
 
 @RefreshScope
 @RestController
@@ -28,33 +29,38 @@ open class CourseController @Autowired constructor(
     @Value("\${service.welcome.message}")
     private val welcomeMessage: String) {
 
-    private fun defineModel(entity: Course): CourseModel =
-        courseConverter.convertToDomain(entity)
-
     @GetMapping("/welcome")
     fun getWelcomeMsg(): String = welcomeMessage
 
     @GetMapping
     fun getAll(): ResponseEntity<List<CourseModel>> {
         val courses = courseRepository.findAll(Sort.by("courseId"))
-            .map { defineModel(it) }
-            .toList()
+            .mapNotNull { courseConverter.convertToDomain(it) }
         return ResponseEntity.ok(courses)
     }
 
     @GetMapping("{courseId}")
     fun getById(@PathVariable("courseId") courseId: String): ResponseEntity<CourseModel?> {
-        return courseRepository
-            .findById(courseId)
-            .map { defineModel(it) }
-            .map { ResponseEntity.ok(it) }
-            .orElseGet { ResponseEntity.notFound().build() }
+        val optionalCourse = courseRepository.findById(courseId)
+        return optionalCourse.map { entity ->
+            courseConverter.convertToDomain(entity)
+        }.map { model ->
+            ResponseEntity.ok(model)
+        }.orElseGet {
+            ResponseEntity.notFound().build()
+        }
     }
 
     @PostMapping
-    fun saveCourse(@RequestBody course: @Valid CourseModel): CourseModel {
-        val entity = courseConverter.convertToEntity(course)
-        return defineModel(courseRepository.saveAndFlush(entity))
+    fun saveCourse(@RequestBody course: @Valid CourseModel): ResponseEntity<CourseModel> {
+        val entityToSave = courseConverter.convertToEntity(course)
+        return entityToSave?.let {
+            val savedEntity = courseRepository.saveAndFlush(it)
+            val savedModel = courseConverter.convertToDomain(savedEntity)
+            savedModel?.let { model ->
+                ResponseEntity.ok(model)
+            } ?: ResponseEntity.badRequest().build()
+        } ?: ResponseEntity.badRequest().build()
     }
 
     @PutMapping("{courseId}")
@@ -64,9 +70,14 @@ open class CourseController @Autowired constructor(
         val optionalCourse = courseRepository.findById(courseId)
 
         return if (optionalCourse.isPresent) {
-            val entity = courseConverter.convertToEntity(course)
-            val updatedEntity = courseRepository.saveAndFlush(entity)
-            ResponseEntity.ok(defineModel(updatedEntity))
+            val entityToSave = courseConverter.convertToEntity(course)
+            entityToSave?.let {
+                val updatedEntity = courseRepository.saveAndFlush(it)
+                val updatedModel = courseConverter.convertToDomain(updatedEntity)
+                updatedModel?.let { model ->
+                    ResponseEntity.ok(model)
+                } ?: ResponseEntity.badRequest().build()
+            } ?: ResponseEntity.badRequest().build()
         } else {
             ResponseEntity.notFound().build()
         }
